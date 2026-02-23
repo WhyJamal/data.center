@@ -41,8 +41,13 @@ yarn-error.log*
 next-env.d.ts
 
 # videos
-/videos/*
-#!/videos/.gitkeep
+public/videos/*
+!/public/videos/.gitkeep
+
+*.mp4
+*.avi
+*.mov
+*.mkv
 
 # models
 #/models/*
