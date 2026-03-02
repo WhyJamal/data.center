@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import { Manrope } from "next/font/google";
 import "./globals.css";
-import { SectionProvider } from "@/shared/context/SectionContext";
-import AudioPlayer from "@/components/audio-player";
 
 const manrope = Manrope({
   subsets: ["latin", "cyrillic"],
@@ -24,11 +22,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${manrope.variable} ${manrope.variable} antialiased`}>
-        <SectionProvider>
-          <AudioPlayer />
+      <body className={`${manrope.variable} ${manrope.variable} antialiased`}> 
           {children}
-        </SectionProvider>
       </body>
     </html>
   );
