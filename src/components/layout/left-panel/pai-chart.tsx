@@ -229,7 +229,7 @@ export default function TitanicPie(): React.ReactElement {
                   `${item.label} (${(item as any).percentage.toFixed(0)}%)`,
                 valueFormatter: ({ value }) =>
                   `${value} out of ${totalCount} (${((value / totalCount) * 100).toFixed(0)}%)`,
-                arcLabelRadius: 90,
+                arcLabelRadius: 100,
                 highlightScope: { fade: 'global', highlight: 'item' },
                 highlighted: { additionalRadius: 2 },
                 cornerRadius: 3,
@@ -237,7 +237,7 @@ export default function TitanicPie(): React.ReactElement {
             ]}
             sx={{
               [`& .${pieClasses.arcLabel}`]: {
-                fontSize: '12px',
+                fontSize: '9px',
                 fill: '#fff'
               },
             }}
@@ -269,7 +269,7 @@ export default function TitanicPie(): React.ReactElement {
                   const percentage = (item as any).percentage || 0;
                   return `${id.split('-')[0]} (${percentage.toFixed(0)}%)`;
                 },
-                arcLabelRadius: 160,
+                arcLabelRadius: 100,
                 valueFormatter: ({ value }) =>
                   `${value} out of ${totalCount} (${((value / totalCount) * 100).toFixed(0)}%)`,
                 highlightScope: { fade: 'global', highlight: 'item' },
@@ -279,7 +279,7 @@ export default function TitanicPie(): React.ReactElement {
             ]}
             sx={{
               [`& .${pieClasses.arcLabel}`]: {
-                fontSize: '12px',
+                fontSize: '9px',
                 fill: '#fff',
               },
             }}

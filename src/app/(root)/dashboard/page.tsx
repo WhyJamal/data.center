@@ -4,6 +4,7 @@ import { Building, buildings } from "@/shared/data/buildingsData";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
+import PolygonOverlay from "@/components/polygon-overlay";
 
 export default function BuildingPage() {
   const router = useRouter();
@@ -82,58 +83,22 @@ export default function BuildingPage() {
           }}
         />
 
+        <PolygonOverlay
+          items={buildings}
+          hoveredId={hoveredId}
+          isExiting={isExiting}
+          onEnter={onEnter}
+          onLeave={onLeave}
+          onClick={(item) => {
+            const b = buildings.find((b) => b.id === item.id);
+            if (b) handleBuildingClick(b);
+          }}
+          showGlow
+        />
+
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_40%,rgba(0,0,0,0.35)_100%)] pointer-events-none" />
 
-        <svg
-          className="absolute inset-0 w-full h-full pointer-events-none"
-          viewBox="0 0 100 100"
-          preserveAspectRatio="none"
-        >
-          <defs>
-            <filter id="white-glow" x="-20%" y="-20%" width="140%" height="140%">
-              <feGaussianBlur in="SourceAlpha" stdDeviation="1.2" result="blur" />
-              <feColorMatrix
-                in="blur"
-                type="matrix"
-                values="0 0 0 0 1   0 0 0 0 1   0 0 0 0 1   0 0 0 28 -8"
-                result="glow"
-              />
-              <feMerge>
-                <feMergeNode in="glow" />
-                <feMergeNode in="SourceGraphic" />
-              </feMerge>
-            </filter>
-          </defs>
-
-          {buildings.map((b) => {
-            if (isExiting) return null;
-
-            const isActive = hoveredId === b.id && !isExiting;
-            return (
-              <g key={b.id}>
-                <polygon
-                  points={b.polygon}
-                  fill={isActive ? "rgba(255,255,255,0.06)" : "transparent"}
-                  stroke={isActive ? "rgba(255,255,255,0.35)" : "transparent"}
-                  strokeWidth="6"
-                  strokeLinejoin="round"
-                  vectorEffect="non-scaling-stroke"
-                  className="[transition:fill_0.25s_ease,stroke_0.25s_ease]"
-                />
-                <polygon
-                  points={b.polygon}
-                  fill={isActive ? b.isUnavailable ? "rgba(239,68,68,0.2)" : "rgba(255,255,255,0.22)" : "transparent"}
-                  stroke={isActive ? b.isUnavailable ? "rgba(239,68,68,1)" : "rgba(255,255,255,1)" : "transparent"}
-                  strokeWidth="2.5"
-                  strokeLinejoin="round"
-                  vectorEffect="non-scaling-stroke"
-                  filter={isActive ? "url(#white-glow)" : undefined}
-                  className="[transition:fill_0.25s_ease,stroke_0.25s_ease]"
-                />
-              </g>
-            );
-          })}
-        </svg>
+        
 
         <svg
           className="absolute inset-0 w-full h-full"

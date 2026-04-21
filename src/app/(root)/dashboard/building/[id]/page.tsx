@@ -6,12 +6,14 @@ import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { IconButton } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import PolygonOverlay from "@/components/polygon-overlay";
 
 export default function BuildingDetailPage() {
   const params = useParams();
   const router = useRouter();
   const id = Number(params.id);
   const building = buildings.find((b) => b.id === id);
+  const [hoveredZone, setHoveredZone] = useState<number | null>(null);
 
   const [mounted, setMounted] = useState(false);
   const [exiting, setExiting] = useState(false);
@@ -46,6 +48,7 @@ export default function BuildingDetailPage() {
 
   return (
     <div className="w-full h-full bg-[#090909] flex flex-col overflow-hidden relative">
+      {/* bg-[#090909] */}
 
       <motion.div
         className="absolute inset-0"
@@ -57,12 +60,25 @@ export default function BuildingDetailPage() {
           ease: [0.16, 1, 0.3, 1],
         }}
       >
-        <img
-          src={building.innerImage}
-          alt={building.name}
-          draggable={false}
-          className="absolute inset-0 w-full h-full object-cover object-center select-none"
-        />
+        <div className="relative w-full h-full">
+          <img
+            src={building.innerImage}
+            alt={building.name}
+            draggable={false}
+            className="absolute inset-0 w-full h-full object-center select-none"
+          />
+
+          <PolygonOverlay
+            items={building.zones ?? []}
+            hoveredId={hoveredZone}
+            onEnter={(id) => setHoveredZone(id)}
+            onLeave={() => setHoveredZone(null)}
+            onClick={(zone) => {
+              console.log("ZONE CLICK:", zone);
+            }}
+            showGlow={false}            
+          />
+        </div>
       </motion.div>
 
       <motion.div
@@ -77,29 +93,6 @@ export default function BuildingDetailPage() {
       />
 
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_35%,rgba(0,0,0,0.38)_100%)] pointer-events-none" />
-
-      <motion.div
-        className="absolute inset-0 bg-black pointer-events-none z-20"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: exiting ? 0.72 : 0 }}
-        transition={{ duration: 0.5, delay: exiting ? 0.3 : 0, ease: "easeIn" }}
-      />
-
-      <motion.div
-        className="absolute top-7 right-8 z-40"
-        initial={{ opacity: 0, x: 12 }}
-        animate={
-          exiting
-            ? { opacity: 0, x: 16 }
-            : mounted
-              ? { opacity: 1, x: 0 }
-              : { opacity: 0, x: 12 }
-        }
-        transition={{ duration: exiting ? 0.28 : 0.5, delay: exiting ? 0 : 0.55, ease: "easeOut" }}
-      >
-        <span className="text-[10px] tracking-[0.45em] uppercase text-white/40">BINO</span>
-        <span className="ml-2 text-[22px] font-light text-white/90 leading-none">{building.id}</span>
-      </motion.div>
 
       <motion.div
         className="absolute bottom-0 left-0 right-0 z-30"
@@ -117,10 +110,10 @@ export default function BuildingDetailPage() {
           delay: exiting ? 0 : 0.3,
         }}
       >
-        <div className="bg-slate-900/50 backdrop-blur-sm border-l border-blue-500/20 px-8 pt-7 pb-8 shadow-[0_-12px_60px_rgba(0,0,0,0.5)]">
+        <div className="bg-slate-900/50 backdrop-blur-sm border-l border-blue-500/20 px-8 pt-4 pb-3 shadow-[0_-12px_60px_rgba(0,0,0,0.5)]">
 
           <motion.div
-            className="flex items-start justify-between mb-5"
+            className="flex items-start justify-between mb-1"
             initial={{ opacity: 0, y: 14 }}
             animate={
               exiting
@@ -158,7 +151,7 @@ export default function BuildingDetailPage() {
             </IconButton>
           </motion.div>
 
-          <div className="border-t border-white/10 mb-5" />
+          <div className="border-t border-white/10 mb-1" />
 
           <motion.div
             className="flex items-end justify-between mb-5"
