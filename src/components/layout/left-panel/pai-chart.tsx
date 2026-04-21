@@ -147,7 +147,7 @@ const survivalClassData: ChartDatum[] = [...titanicData]
       color: hexToRgba(baseColor, opacityMap[item.Class] || 1),
     };
   });
-  
+
 //theme.palette.text.primary,
 const StyledText = styled('text')(({ theme }: { theme: Theme }) => ({
   fill: "#fff",
@@ -182,12 +182,12 @@ export default function TitanicPie(): React.ReactElement {
     }
   };
 
-  const innerRadius = 30;
-  const middleRadius = 100;
+  const innerRadius = 15;
+  const middleRadius = 60;
 
   return (
     <Box sx={{ width: '100%', textAlign: 'center' }}>
-      <Typography variant="h5" gutterBottom>
+      <Typography sx={{ fontSize: '11px', fontWeight: 'bold', mb: 0.5, color: '#fff' }}>
         Production Overview
       </Typography>
       <ToggleButtonGroup
@@ -197,15 +197,15 @@ export default function TitanicPie(): React.ReactElement {
         exclusive
         onChange={handleViewChange}
       >
-        <ToggleButton 
+        <ToggleButton
           value="class"
-          sx={{color: '#fff'}}
+          sx={{ color: '#fff', fontSize: '9px', py: 0.25, px: 1 }}
         >
           View by Class
         </ToggleButton>
-        <ToggleButton value="survival" sx={{color: '#fff'}}>View by Survival</ToggleButton>
+        <ToggleButton value="survival" sx={{ color: '#fff', fontSize: '9px', py: 0.25, px: 1 }}>View by Survival</ToggleButton>
       </ToggleButtonGroup>
-      <Box sx={{ display: 'flex', justifyContent: 'center', height: 400 }}>
+      <Box sx={{ display: 'flex', justifyContent: 'center', height: 200 }}>
         {view === 'class' ? (
           <PieChart
             series={[
@@ -229,7 +229,7 @@ export default function TitanicPie(): React.ReactElement {
                   `${item.label} (${(item as any).percentage.toFixed(0)}%)`,
                 valueFormatter: ({ value }) =>
                   `${value} out of ${totalCount} (${((value / totalCount) * 100).toFixed(0)}%)`,
-                arcLabelRadius: 160,
+                arcLabelRadius: 90,
                 highlightScope: { fade: 'global', highlight: 'item' },
                 highlighted: { additionalRadius: 2 },
                 cornerRadius: 3,

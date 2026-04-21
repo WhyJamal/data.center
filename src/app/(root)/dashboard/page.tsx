@@ -124,7 +124,7 @@ export default function BuildingPage() {
                   points={b.polygon}
                   fill={isActive ? b.isUnavailable ? "rgba(239,68,68,0.2)" : "rgba(255,255,255,0.22)" : "transparent"}
                   stroke={isActive ? b.isUnavailable ? "rgba(239,68,68,1)" : "rgba(255,255,255,1)" : "transparent"}
-                  strokeWidth="4"
+                  strokeWidth="2.5"
                   strokeLinejoin="round"
                   vectorEffect="non-scaling-stroke"
                   filter={isActive ? "url(#white-glow)" : undefined}

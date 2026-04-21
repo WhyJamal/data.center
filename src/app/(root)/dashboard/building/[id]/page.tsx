@@ -139,7 +139,7 @@ export default function BuildingDetailPage() {
                 {building.area.toLocaleString()} M²
               </p>
               <p className="text-[10px] text-white/50 tracking-widest uppercase mt-0.5">
-                {building.floors} QAVAT
+                {building.floors} Этаж
               </p>
             </div>
             <IconButton
@@ -175,7 +175,7 @@ export default function BuildingDetailPage() {
             <div>
               <div className="flex items-baseline gap-2 mb-1">
                 <span className="text-[10px] tracking-[0.45em] uppercase text-white/60 font-medium">
-                  BINO
+                  Здание
                 </span>
                 <span className="text-[72px] font-light text-white/90 leading-none tracking-[-0.02em]">
                   {building.id}

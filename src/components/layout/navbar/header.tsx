@@ -3,7 +3,7 @@ import Image from "next/image";
 export function Header() {
   return (
     <div className="fixed top-0 left-0 right-0 w-full z-100">
-      <div className="relative w-full h-24">
+      <div className="relative w-full h-12">
         
         <svg 
           className="absolute inset-0 w-full h-full" 
@@ -66,8 +66,8 @@ export function Header() {
               <Image
                 src={"/icons/logo.png"}
                 alt=""
-                width={70}
-                height={50}
+                width={37}
+                height={20}
               />
             </div>
             
@@ -86,12 +86,12 @@ export function Header() {
             </div> */}
 
             <div className="relative">
-              <h1 className="text-2xl font-bold bg-linear-to-r from-cyan-300 via-blue-300 to-purple-300 bg-clip-text text-transparent tracking-wider">
+              <h1 className="text-xl font-bold bg-linear-to-r from-cyan-300 via-blue-300 to-purple-300 bg-clip-text text-transparent tracking-wider">
                 Monitoring Hub
               </h1>
               <div className="absolute -bottom-1 left-0 w-full h-0.5 bg-linear-to-r from-cyan-500 via-blue-500 to-purple-500 opacity-60" />
               
-              <p className="text-xs text-cyan-200/60 tracking-widest mt-1 uppercase">
+              <p className="text-xs text-cyan-200/60 tracking-widest uppercase">
                 Future Technology
               </p>
             </div>
