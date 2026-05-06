@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { IconButton } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import PolygonOverlay from "@/components/polygon-overlay";
+import ProductionChart from "@/components/charts/production-chart";
 
 export default function BuildingDetailPage() {
   const params = useParams();
@@ -14,7 +15,6 @@ export default function BuildingDetailPage() {
   const id = Number(params.id);
   const building = buildings.find((b) => b.id === id);
   const [hoveredZone, setHoveredZone] = useState<number | null>(null);
-
   const [mounted, setMounted] = useState(false);
   const [exiting, setExiting] = useState(false);
 
@@ -26,7 +26,6 @@ export default function BuildingDetailPage() {
   const handleBack = () => {
     if (exiting) return;
     setExiting(true);
-
     setTimeout(() => router.push("/dashboard"), 900);
   };
 
@@ -40,25 +39,21 @@ export default function BuildingDetailPage() {
 
   const imageVariants = {
     initial: { scale: 1.18, filter: "brightness(0.25) blur(10px)" },
-    enter: { scale: 1, filter: "brightness(1) blur(0px)" },
-    exit: { scale: 3.0, filter: "brightness(0.15) blur(8px)" },
+    enter:   { scale: 1,    filter: "brightness(1) blur(0px)"     },
+    exit:    { scale: 3.0,  filter: "brightness(0.15) blur(8px)"  },
   };
 
   const currentImage = exiting ? "exit" : mounted ? "enter" : "initial";
 
   return (
     <div className="w-full h-full bg-[#090909] flex flex-col overflow-hidden relative">
-      {/* bg-[#090909] */}
 
       <motion.div
         className="absolute inset-0"
         variants={imageVariants}
         initial="initial"
         animate={currentImage}
-        transition={{
-          duration: exiting ? 0.85 : 0.9,
-          ease: [0.16, 1, 0.3, 1],
-        }}
+        transition={{ duration: exiting ? 0.85 : 0.9, ease: [0.16, 1, 0.3, 1] }}
       >
         <div className="relative w-full h-full">
           <img
@@ -67,16 +62,13 @@ export default function BuildingDetailPage() {
             draggable={false}
             className="absolute inset-0 w-full h-full object-center select-none"
           />
-
           <PolygonOverlay
             items={building.zones ?? []}
             hoveredId={hoveredZone}
             onEnter={(id) => setHoveredZone(id)}
             onLeave={() => setHoveredZone(null)}
-            onClick={(zone) => {
-              console.log("ZONE CLICK:", zone);
-            }}
-            showGlow={false}            
+            onClick={(zone) => { console.log("ZONE CLICK:", zone); }}
+            showGlow={false}
           />
         </div>
       </motion.div>
@@ -97,86 +89,48 @@ export default function BuildingDetailPage() {
       <motion.div
         className="absolute bottom-0 left-0 right-0 z-30"
         initial={{ y: "100%" }}
-        animate={
-          exiting
-            ? { y: "100%" }
-            : mounted
-              ? { y: "0%" }
-              : { y: "100%" }
-        }
+        animate={exiting ? { y: "100%" } : mounted ? { y: "0%" } : { y: "100%" }}
         transition={{
           duration: exiting ? 0.5 : 0.75,
           ease: exiting ? [0.4, 0, 0.6, 1] : [0.16, 1, 0.3, 1],
           delay: exiting ? 0 : 0.3,
         }}
       >
-        <div className="bg-slate-900/50 backdrop-blur-sm border-l border-blue-500/20 px-8 pt-4 pb-3 shadow-[0_-12px_60px_rgba(0,0,0,0.5)]">
-
-          <motion.div
-            className="flex items-start justify-between mb-1"
-            initial={{ opacity: 0, y: 14 }}
-            animate={
-              exiting
-                ? { opacity: 0, y: 8 }
-                : mounted
-                  ? { opacity: 1, y: 0 }
-                  : { opacity: 0, y: 14 }
-            }
-            transition={{ duration: exiting ? 0.22 : 0.5, delay: exiting ? 0 : 0.55 }}
-          >
-            <div>
-              <p className="text-[10px] tracking-[0.28em] uppercase text-white/45 font-medium mb-1">
-                {building.type}
-              </p>
-              <p className="text-[11px] text-white/50 tracking-[0.08em]">
-                {building.area.toLocaleString()} M²
-              </p>
-              <p className="text-[10px] text-white/50 tracking-widest uppercase mt-0.5">
-                {building.floors} Этаж
-              </p>
-            </div>
-            <IconButton
-              onClick={handleBack}
-              sx={{
-                bgcolor: "rgba(255,255,255,0.1)",
-                backdropFilter: "blur(8px)",
-                border: "1px solid rgba(255,255,255,0.15)",
-                color: "white",
-                "&:hover": {
-                  bgcolor: "rgba(255,255,255,0.2)",
-                },
-              }}
-            >
-              <ArrowBackIcon />
-            </IconButton>
-          </motion.div>
+        <div className="bg-slate-900/50 backdrop-blur-sm border-l border-blue-500/20 px-4 pt-1 pb-1 shadow-[0_-12px_60px_rgba(0,0,0,0.5)]">
 
           <div className="border-t border-white/10 mb-1" />
 
           <motion.div
-            className="flex items-end justify-between mb-5"
+            className="flex items-start justify-between mb-5"
             initial={{ opacity: 0, y: 14 }}
-            animate={
-              exiting
-                ? { opacity: 0, y: 8 }
-                : mounted
-                  ? { opacity: 1, y: 0 }
-                  : { opacity: 0, y: 14 }
-            }
+            animate={exiting ? { opacity: 0, y: 8 } : mounted ? { opacity: 1, y: 0 } : { opacity: 0, y: 14 }}
             transition={{ duration: exiting ? 0.18 : 0.5, delay: exiting ? 0 : 0.62 }}
           >
-            <div>
-              <div className="flex items-baseline gap-2 mb-1">
-                <span className="text-[10px] tracking-[0.45em] uppercase text-white/60 font-medium">
-                  Здание
-                </span>
-                <span className="text-[72px] font-light text-white/90 leading-none tracking-[-0.02em]">
-                  {building.id}
-                </span>
+            <div className="flex flex-col">
+              <div>
+                <p className="text-[10px] tracking-[0.28em] uppercase text-white/45 font-medium mb-1">
+                  {building.type}
+                </p>
+                <p className="text-[11px] text-white/50 tracking-[0.08em]">
+                  {building.area.toLocaleString()} M²
+                </p>
+                <p className="text-[10px] text-white/50 tracking-widest uppercase mt-0.5">
+                  {building.floors} Этаж
+                </p>
               </div>
-              <p className="text-[10px] tracking-[0.22em] uppercase text-white/80 font-semibold">
-                {building.name}
-              </p>
+              <div>
+                <div className="flex items-baseline gap-2 mb-1">
+                  <span className="text-[10px] tracking-[0.45em] uppercase text-white/60 font-medium">
+                    Здание
+                  </span>
+                  <span className="text-[72px] font-light text-white/90 leading-none tracking-[-0.02em]">
+                    {building.id}
+                  </span>
+                </div>
+                <p className="text-[10px] tracking-[0.22em] uppercase text-white/80 font-semibold">
+                  {building.name}
+                </p>
+              </div>
             </div>
 
             {building.units && (
@@ -189,24 +143,36 @@ export default function BuildingDetailPage() {
                 </p>
               </div>
             )}
+
+            <div className="w-full px-4">
+              <ProductionChart />
+            </div>
+
+            <IconButton
+              onClick={handleBack}
+              sx={{
+                bgcolor: "rgba(255,255,255,0.1)",
+                backdropFilter: "blur(8px)",
+                border: "1px solid rgba(255,255,255,0.15)",
+                color: "white",
+                "&:hover": { bgcolor: "rgba(255,255,255,0.2)" },
+              }}
+            >
+              <ArrowBackIcon />
+            </IconButton>
           </motion.div>
 
           {building.description && (
             <motion.p
               className="text-[11px] text-white/50 leading-[1.7] border-t border-black/8 pt-4"
               initial={{ opacity: 0, y: 10 }}
-              animate={
-                exiting
-                  ? { opacity: 0, y: 8 }
-                  : mounted
-                    ? { opacity: 1, y: 0 }
-                    : { opacity: 0, y: 10 }
-              }
+              animate={exiting ? { opacity: 0, y: 8 } : mounted ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
               transition={{ duration: exiting ? 0.15 : 0.5, delay: exiting ? 0 : 0.7 }}
             >
               {building.description}
             </motion.p>
           )}
+
         </div>
       </motion.div>
     </div>

@@ -1,11 +1,9 @@
 import axios from "axios";
 
-const API_BASE = process.env.NEXT_PUBLIC_API_URL;
+const API_BASE = process.env.NEXT_PUBLIC_API_PREFIX;
 const USERNAME = process.env.NEXT_PUBLIC_API_USER;
 const PASSWORD = process.env.NEXT_PUBLIC_API_PASS;
 
-// alert(USERNAME)
-// alert(PASSWORD)
 /**
  * Basic Auth encode (UTF-8 safe)
  */
@@ -24,7 +22,7 @@ const createBasicToken = () => {
 };
 
 const api = axios.create({
-  baseURL: API_BASE,
+  baseURL: `/${API_BASE}/`,
   timeout: 15000,
   headers: {
     "Content-Type": "application/json",

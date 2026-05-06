@@ -2,8 +2,9 @@ import React from 'react';
 import { Header } from '@/components/layout/navbar/header';
 import LeftPanel from '@/components/layout/left-panel';
 import RightPanel from '@/components/layout/right-panel';
-import { SectionProvider } from "@/shared/context/SectionContext";
+import { SectionProvider } from "@/app/context/SectionContext";
 import AudioPlayer from "@/components/audio-player";
+import { DashboardDataProvider } from '@/app/context/DashboardDataContext';
 
 export default function DashboardLayout({
   children,
@@ -12,35 +13,36 @@ export default function DashboardLayout({
 }) {
   return (
     <SectionProvider>
-      <AudioPlayer />
+      <DashboardDataProvider>
+        <AudioPlayer />
 
-      <div className="min-h-screen bg-slate-950 text-white">
-        <Header />
+        <div className="min-h-screen bg-slate-950 text-white">
+          <Header />
 
-        <div
-          className="flex h-[calc(100vh-10px)]"
-          style={{
-            backgroundImage: "url('/factory/buildings.png')",
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-            backgroundRepeat: "no-repeat"
-          }}
-        >
+          <div
+            className="flex h-[calc(100vh-10px)]"
+            style={{
+              backgroundImage: "url('/factory/buildings.png')",
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+              backgroundRepeat: "no-repeat"
+            }}
+          >
 
-          <aside className="w-[20%] shrink-0">
-            <LeftPanel />
-          </aside>
+            <aside className="w-[20%] shrink-0">
+              <LeftPanel />
+            </aside>
 
-          <main className="flex-1 overflow-hidden relative">
-            {children}
-          </main>
+            <main className="flex-1 overflow-hidden relative">
+              {children}
+            </main>
 
-          <aside className="w-[20%] shrink-0">
-            <RightPanel />
-          </aside>
+            <aside className="w-[20%] shrink-0">
+              <RightPanel />
+            </aside>
+          </div>
         </div>
-      </div>
-
+      </DashboardDataProvider>
     </SectionProvider>
   );
 }

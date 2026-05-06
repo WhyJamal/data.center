@@ -1,7 +1,7 @@
 "use client";
 
 import { createContext, useContext, useState, ReactNode } from "react";
-import { Section } from "@/shared/types";
+import { Section } from "@/types/section.types";
 
 const SectionContext = createContext({
   selectedSection: null as Section | null,
