@@ -199,4 +199,13 @@
   animation: glowPulseOrange 1.8s infinite ease-in-out;
 }
 
-/* Zoom? */
+/* MUI X Charts tooltip fix — overflow clip */
+.MuiChartsTooltip-root {
+  position: fixed !important;
+  z-index: 9999 !important;
+  pointer-events: none;
+}
+
+.MuiChartsTooltip-paper {
+  position: relative !important;
+}

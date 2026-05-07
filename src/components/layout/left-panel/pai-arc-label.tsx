@@ -60,6 +60,28 @@ export default function PaiArcLabel({
         },
       ]}
       slotProps={{
+        tooltip: {
+          trigger: "item",
+          anchor: "node",
+          position: "left",
+          placement: "left",
+          disablePortal: true,
+          modifiers: [
+            {
+              name: "preventOverflow",
+              options: {
+                boundary: "clippingParents",
+                padding: 1,
+              },
+            },
+            {
+              name: "flip",
+              options: {
+                fallbackPlacements: ["right", "top", "bottom"],
+              },
+            },
+          ],
+        },
         legend: {
           direction: "horizontal",
           position: { vertical: "bottom", horizontal: "center" },

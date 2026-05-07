@@ -29,7 +29,7 @@ export default function DashboardLayout({
             }}
           >
 
-            <aside className="w-[20%] shrink-0">
+            <aside className="w-[20%] shrink-0 overflow-x-hidden">
               <LeftPanel />
             </aside>
 
