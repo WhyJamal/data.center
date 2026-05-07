@@ -37,13 +37,13 @@ export default function LeftPanel() {
           <span className="text-[10px] text-slate-400 mb-1 tracking-wide">
             Штат по отделам
           </span>
-          <PieArcLabel data={data.hr.employeesByDepartment} hideLegend />
+          <PieArcLabel data={data.hr.employeesByDepartment} hideLegend variant="green" />
         </div>
 
       </div>
 
       <div className="flex bg-slate-800/50 rounded border border-blue-500/20 items-center justify-center">
-        <TickPlacementBars data={data.hr.monthlyEmployees} />
+        <TickPlacementBars data={data.hr.monthlyEmployees} variant="red" />
       </div>
     </div>
   );

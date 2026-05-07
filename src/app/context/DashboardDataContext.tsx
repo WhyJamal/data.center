@@ -10,6 +10,7 @@ import type { DashboardData } from "@/types/dashboard.types";
 import { useDashboardStore } from "@/stores/dashboard.store";
 import { onecSocket } from "@/services/sockets/onec.socket";
 import { timesheetSocket } from "@/services/sockets/timesheet.socket";
+import { useToast } from "@/app/context/ToastContext";
 
 type DashboardContextValue = {
   data: DashboardData;
@@ -27,6 +28,8 @@ export function DashboardDataProvider({
   const { data, loading, error, setData, setError, updateTimesheetStat } =
     useDashboardStore();
 
+  const { showToast } = useToast();
+
   const hasConnected = useRef(false);
 
   useEffect(() => {
@@ -34,13 +37,22 @@ export function DashboardDataProvider({
     hasConnected.current = true;
 
     onecSocket.connect({
-      onData: (wsData) => setData(wsData),
-      onError: () => setError("ошибка подключения с 1С"),
+      onData: (wsData) => {
+        setData(wsData)
+        showToast("1C data updated", "success");
+      },
+      onError: () => {
+        setError("ошибка подключения с 1С")
+        showToast("1C connection error", "error");
+      },
     });
 
     timesheetSocket.connect({
-      onData: (wsData) => updateTimesheetStat(wsData.total_users),
-      onError: () => console.warn("Timesheet socket ошибка"),
+      onData: (wsData) => {
+        updateTimesheetStat(wsData.total_users)
+        showToast("Timesheet updated", "info");
+      },
+      onError: () => showToast("Timesheet socket error", "warning"),
     });
 
     return () => {
@@ -48,7 +60,7 @@ export function DashboardDataProvider({
       timesheetSocket.disconnect();
       hasConnected.current = false;
     };
-  }, []);
+  }, [showToast]);
 
   return (
     <DashboardContext.Provider value={{ data, loading, error }}>

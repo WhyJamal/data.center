@@ -10,17 +10,27 @@ interface GridDemoProps {
         month: string;
         value: number;
     }[];
+    variant?: 'orange' | 'green' | 'blue' | 'red';
 }
 
 function valueFormatter(value: number | null) {
     return `${value}mm`;
 }
 
-export default function GridDemo({ data = [] }: GridDemoProps) {
+const COLOR_MAP = {
+    orange: '#ff9800',
+    green: '#4caf50',
+    blue: '#2196f3',
+    red: "#ef5350",
+};
+
+export default function GridDemo({ data = [], variant = 'blue' }: GridDemoProps) {
     const dataset = data.map((item) => ({
         value: item.value,
         month: item.month,
     }));
+
+    const color = COLOR_MAP[variant];
 
     return (
         <BarChart
@@ -30,7 +40,14 @@ export default function GridDemo({ data = [] }: GridDemoProps) {
                 tickMinStep: 1,
                 tickLabelStyle: { fontSize: 11 }
             }]}
-            series={[{ dataKey: 'value', label: 'Количество работающих сотрудником', valueFormatter }]}
+            series={[
+                {
+                    dataKey: 'value',
+                    label: 'Количество работающих сотрудником',
+                    valueFormatter,
+                    color, 
+                }
+            ]}
             layout="horizontal"
             grid={{ vertical: true }}
             {...chartSetting}
