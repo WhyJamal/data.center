@@ -8,7 +8,7 @@ interface PaiArcLabelProps {
   hideLegend?: boolean;
 }
 
-export default function PaiArcLabel({ data, hideLegend = false }: PaiArcLabelProps) {
+export default function PaiArcLabel({ data = [], hideLegend = false }: PaiArcLabelProps) {
   const chartData = data.map((item) => ({
     id: item.label,
     value: item.value,

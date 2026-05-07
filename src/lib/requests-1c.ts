@@ -1,4 +1,4 @@
-import api from "@/lib/axiosInstance";
+import api from "@/lib/axiosInstance-1c";
 
 export const getData = async <T = any>(endpoint: string): Promise<T> => {
   const res = await api.get(endpoint);

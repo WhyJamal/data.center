@@ -22,7 +22,7 @@ const createBasicToken = () => {
 };
 
 const api = axios.create({
-  baseURL: `/${API_BASE}/`,
+  baseURL: "/",
   timeout: 15000,
   headers: {
     "Content-Type": "application/json",

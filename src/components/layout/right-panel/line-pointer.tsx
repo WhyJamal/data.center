@@ -1,21 +1,16 @@
 import Box from "@mui/material/Box";
 import { LineChart } from "@mui/x-charts/LineChart";
-
-type YearSeries = {
-    year: string;
-    data: number[];
-};
+import type { TProductionData } from "@/types/production.types";
 
 interface Props {
-    months: string[];
-    series: YearSeries[];
+    data: TProductionData;
 }
 
-export default function MultiYearLineChart({ months, series }: Props) {
-    const dataset = months.map((month, index) => {
+export default function MultiYearLineChart({ data }: Props) {
+    const dataset = data.months.map((month, index) => {
         const row: any = { month };
 
-        series.forEach((s) => {
+        data.series.forEach((s) => {
             row[s.year] = s.data[index];
         });
 
@@ -31,10 +26,10 @@ export default function MultiYearLineChart({ months, series }: Props) {
                         dataKey: "month",
                         scaleType: "point",
                         tickMinStep: 1,
-                        tickLabelStyle: { fontSize: 11 }
+                        tickLabelStyle: { fontSize: 11 },
                     },
                 ]}
-                series={series.map((s) => ({
+                series={data.series.map((s) => ({
                     dataKey: s.year,
                     label: s.year,
                 }))}

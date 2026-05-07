@@ -4,7 +4,7 @@ type HRStatCardsProps = {
     data: THRStatItem[];
 };
 
-export function HRStatCards({ data }: HRStatCardsProps) {
+export function HRStatCards({ data = [] }: HRStatCardsProps) {
     return (
         <div className="flex w-full gap-2 items-stretch">
             {data.map((item, index) => (

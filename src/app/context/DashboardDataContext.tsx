@@ -1,53 +1,65 @@
 "use client";
 
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useRef,
+} from "react";
 import type { DashboardData } from "@/types/dashboard.types";
-import { defaultDashboardData } from "@/lib/dashboard-defaults";
-import { dashboardService } from "@/services/dashboard-service";
+import { useDashboardStore } from "@/stores/dashboard.store";
+import { onecSocket } from "@/services/sockets/onec.socket";
+import { timesheetSocket } from "@/services/sockets/timesheet.socket";
 
 type DashboardContextValue = {
   data: DashboardData;
   loading: boolean;
   error: string | null;
-  refetch: () => Promise<void>;
 };
 
 const DashboardContext = createContext<DashboardContextValue | null>(null);
 
-export function DashboardDataProvider({ children }: { children: React.ReactNode }) {
-  const [data, setData] = useState<DashboardData>(defaultDashboardData);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+export function DashboardDataProvider({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const { data, loading, error, setData, setError, updateTimesheetStat } =
+    useDashboardStore();
 
-  const load = async () => {
-    try {
-      setLoading(true);
-      setError(null);
-
-      const res = await dashboardService.getDashboard();
-      setData(res);
-
-    } catch (e: any) {
-      //setError(e?.message || "Data yuklashda xatolik");
-      setData(defaultDashboardData);
-    } finally {
-      setLoading(false);
-    }
-  };
+  const hasConnected = useRef(false);
 
   useEffect(() => {
-    load();
+    if (hasConnected.current) return;
+    hasConnected.current = true;
+
+    onecSocket.connect({
+      onData: (wsData) => setData(wsData),
+      onError: () => setError("ошибка подключения с 1С"),
+    });
+
+    timesheetSocket.connect({
+      onData: (wsData) => updateTimesheetStat(wsData.total_users),
+      onError: () => console.warn("Timesheet socket ошибка"),
+    });
+
+    return () => {
+      onecSocket.disconnect();
+      timesheetSocket.disconnect();
+      hasConnected.current = false;
+    };
   }, []);
 
   return (
-    <DashboardContext.Provider value={{ data, loading, error, refetch: load }}>
+    <DashboardContext.Provider value={{ data, loading, error }}>
       {children}
     </DashboardContext.Provider>
   );
 }
 
-export function useDashboardData() {
+export function useDashboardData(): DashboardContextValue {
   const ctx = useContext(DashboardContext);
-  if (!ctx) throw new Error("useDashboardData must be used inside DashboardDataProvider");
+  if (!ctx)
+    throw new Error("useDashboardData must be used inside DashboardDataProvider");
   return ctx;
 }

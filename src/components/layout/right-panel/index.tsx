@@ -4,9 +4,11 @@ import { useSection } from "@/app/context/SectionContext";
 import EnergyPlatformBanner from "./energy-platform-banner";
 import MultiYearLineChart from "./line-pointer";
 import { productionData } from "./production-data";
+import { useDashboardData } from "@/app/context/DashboardDataContext";
 
 export default function RightPanel() {
   const { selectedSection } = useSection();
+  const { data, loading } = useDashboardData();
 
   return (
     <div className="bg-slate-900/50 backdrop-blur-sm h-full overflow-y-auto border-l border-blue-500/20 custom-scroll">
@@ -37,10 +39,7 @@ export default function RightPanel() {
         <span className="text-[12px] text-slate-400 mb-1 mt-1 tracking-wide">
           Анализ производства по годам
         </span>
-        <MultiYearLineChart
-          months={productionData.months}
-          series={productionData.series}
-        />
+        <MultiYearLineChart data={data.production} />
       </div>
     </div>
   );

@@ -16,7 +16,7 @@ function valueFormatter(value: number | null) {
     return `${value}mm`;
 }
 
-export default function GridDemo({ data }: GridDemoProps) {
+export default function GridDemo({ data = [] }: GridDemoProps) {
     const dataset = data.map((item) => ({
         value: item.value,
         month: item.month,
