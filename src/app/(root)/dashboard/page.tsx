@@ -1,15 +1,16 @@
 "use client";
 
-import { Building, buildings } from "@/shared/data/buildingsData";
+import { buildings } from "@/features/buildings/data/buildings.dataset";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import PolygonOverlay from "@/components/polygon-overlay";
+import { IBuilding } from "@/features/buildings/types/building.type";
 
 export default function BuildingPage() {
   const router = useRouter();
   const [hoveredId, setHoveredId] = useState<number | null>(null);
-  const [lastBuilding, setLastBuilding] = useState<Building | null>(null);
+  const [lastBuilding, setLastBuilding] = useState<IBuilding | null>(null);
   const [selectedId, setSelectedId] = useState<number | null>(null);
   const [zoomOrigin, setZoomOrigin] = useState({ x: 50, y: 50 });
   const [isExiting, setIsExiting] = useState(false);
@@ -29,9 +30,9 @@ export default function BuildingPage() {
     setHoveredId(null);
   };
 
-  const handleBuildingClick = (b: Building) => {
+  const handleBuildingClick = (b: IBuilding) => {
     if (isExiting) return;
-    setZoomOrigin({ x: b.mx, y: b.my });
+    setZoomOrigin({ x: b.geometry.mx, y: b.geometry.my });
     setSelectedId(b.id);
     setIsExiting(true);
 
@@ -49,6 +50,12 @@ export default function BuildingPage() {
   const handleMouseMove = (e: React.MouseEvent) => {
     setMousePos({ x: e.clientX, y: e.clientY });
   };
+
+  const polygonItems = buildings.map((b) => ({
+    id: b.id,
+    polygon: b.geometry.polygon,
+    isUnavailable: b.isUnavailable,
+  }));
 
   return (
     <div className="w-full h-full bg-[#090909] flex flex-col overflow-hidden">
@@ -84,7 +91,7 @@ export default function BuildingPage() {
         />
 
         <PolygonOverlay
-          items={buildings}
+          items={polygonItems}
           hoveredId={hoveredId}
           isExiting={isExiting}
           onEnter={onEnter}
@@ -98,8 +105,6 @@ export default function BuildingPage() {
 
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_40%,rgba(0,0,0,0.35)_100%)] pointer-events-none" />
 
-        
-
         <svg
           className="absolute inset-0 w-full h-full"
           viewBox="0 0 100 100"
@@ -108,7 +113,7 @@ export default function BuildingPage() {
           {buildings.map((b) => (
             <polygon
               key={b.id}
-              points={b.polygon}
+              points={b.geometry.polygon}
               fill="transparent"
               stroke="transparent"
               strokeWidth="6"
@@ -131,7 +136,7 @@ export default function BuildingPage() {
             <div
               key={b.id}
               className="absolute -translate-x-1/2 -translate-y-1/2 z-20"
-              style={{ left: `${b.mx}%`, top: `${b.my}%` }}
+              style={{ left: `${b.geometry.mx}%`, top: `${b.geometry.my}%` }}
               onMouseEnter={() => onEnter(b.id)}
               onMouseLeave={onLeave}
               onClick={() => handleBuildingClick(b)}

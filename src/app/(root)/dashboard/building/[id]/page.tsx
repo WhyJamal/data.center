@@ -1,13 +1,14 @@
 "use client";
 
-import { buildings } from "@/shared/data/buildingsData";
+import { buildings } from "@/features/buildings/data/buildings.dataset";
 import { useParams, useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { IconButton } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import PolygonOverlay from "@/components/polygon-overlay";
-import ProductionChart from "@/components/charts/production-chart";
+import ProductionChart from "@/features/buildings/components/production-chart";
+import { renderBuildingComponent } from "@/features/buildings/renderers/renderBuildingComponent";
 
 export default function BuildingDetailPage() {
   const params = useParams();
@@ -39,8 +40,8 @@ export default function BuildingDetailPage() {
 
   const imageVariants = {
     initial: { scale: 1.18, filter: "brightness(0.25) blur(10px)" },
-    enter:   { scale: 1,    filter: "brightness(1) blur(0px)"     },
-    exit:    { scale: 3.0,  filter: "brightness(0.15) blur(8px)"  },
+    enter: { scale: 1, filter: "brightness(1) blur(0px)" },
+    exit: { scale: 3.0, filter: "brightness(0.15) blur(8px)" },
   };
 
   const currentImage = exiting ? "exit" : mounted ? "enter" : "initial";
@@ -56,14 +57,18 @@ export default function BuildingDetailPage() {
         transition={{ duration: exiting ? 0.85 : 0.9, ease: [0.16, 1, 0.3, 1] }}
       >
         <div className="relative w-full h-full">
-          <img
-            src={building.innerImage}
-            alt={building.name}
-            draggable={false}
-            className="absolute inset-0 w-full h-full object-center select-none"
-          />
+          
+          {building.visual.innerImage &&
+            <img
+              src={building.visual.innerImage}
+              alt={building.name}
+              draggable={false}
+              className="absolute inset-0 w-full h-full object-center select-none"
+            />
+          }
+          
           <PolygonOverlay
-            items={building.zones ?? []}
+            items={building.visual.zones?.items ?? []}
             hoveredId={hoveredZone}
             onEnter={(id) => setHoveredZone(id)}
             onLeave={() => setHoveredZone(null)}
@@ -133,19 +138,8 @@ export default function BuildingDetailPage() {
               </div>
             </div>
 
-            {building.units && (
-              <div className="text-right pb-1">
-                <p className="text-[42px] font-light text-white/90 leading-none tracking-[-0.02em]">
-                  {building.units}
-                </p>
-                <p className="text-[10px] tracking-[0.28em] uppercase text-white/55 mt-0.5">
-                  BIRLIK
-                </p>
-              </div>
-            )}
-
             <div className="w-full px-4">
-              <ProductionChart />
+              {renderBuildingComponent(building.features?.component)}
             </div>
 
             <IconButton
