@@ -6,7 +6,12 @@ interface Props {
     data: TProductionData;
 }
 
-export default function MultiYearLineChart({ data }: Props) {
+export default function MultiYearLineChart({
+    data = {
+        months: [],
+        series: [],
+    },
+}: Props) {
     const dataset = data.months.map((month, index) => {
         const row: any = { month };
 

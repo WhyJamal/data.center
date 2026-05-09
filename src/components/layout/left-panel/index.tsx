@@ -5,6 +5,7 @@ import TickPlacementBars from "./tick-placement-bars";
 import { HRStatCards } from "./hr-stat-cards";
 import { useDashboardData } from "@/app/context/DashboardDataContext";
 import { Loading } from "@/components/loading-dot";
+import SystemChart from "./system-chart";
 
 export default function LeftPanel() {
   const { data, loading } = useDashboardData();
@@ -42,9 +43,14 @@ export default function LeftPanel() {
 
       </div>
 
-      <div className="flex bg-slate-800/50 rounded border border-blue-500/20 items-center justify-center">
+      <div className="flex bg-slate-800/50 rounded border border-blue-500/20 items-center justify-center mb-2">
         <TickPlacementBars data={data.hr.monthlyEmployees} variant="red" />
       </div>
+
+      <div className="flex bg-slate-800/50 rounded border border-blue-500/20 items-center justify-center mb-8">
+        <SystemChart />
+      </div>
+
     </div>
   );
 }

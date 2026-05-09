@@ -1,23 +1,32 @@
 "use client";
 
 import { createContext, useContext, useState, ReactNode } from "react";
-import { Section } from "@/types/section.types";
+import { IBuilding } from "@/features/buildings/types/building.type";
 
-const SectionContext = createContext({
-  selectedSection: null as Section | null,
-  setSelectedSection: (s: Section | null) => {},
-});
+type SectionContextType = {
+  selectedSection: IBuilding | null;
+  setSelectedSection: (s: IBuilding | null) => void;
+  clearSelectedSection: () => void;
+};
+
+const SectionContext = createContext<SectionContextType | null>(null);
 
 export function SectionProvider({ children }: { children: ReactNode }) {
-  const [selectedSection, setSelectedSection] = useState<Section | null>(null);
+  const [selectedSection, setSelectedSection] = useState<IBuilding | null>(null);
+
+  const clearSelectedSection = () => setSelectedSection(null);
 
   return (
-    <SectionContext.Provider value={{ selectedSection, setSelectedSection }}>
+    <SectionContext.Provider
+      value={{ selectedSection, setSelectedSection, clearSelectedSection }}
+    >
       {children}
     </SectionContext.Provider>
   );
 }
 
 export function useSection() {
-  return useContext(SectionContext);
+  const ctx = useContext(SectionContext);
+  if (!ctx) throw new Error("useSection must be used within SectionProvider");
+  return ctx;
 }

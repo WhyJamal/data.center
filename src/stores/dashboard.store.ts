@@ -1,6 +1,7 @@
 import { useState, useCallback } from "react";
 import type { DashboardData } from "@/types/dashboard.types";
 import { defaultDashboardData } from "@/lib/dashboard-defaults";
+import { mergeDashboardData } from "./merge-data-dashboard";
 
 interface DashboardState {
     data: DashboardData;
@@ -17,29 +18,13 @@ const initialState: DashboardState = {
 export function useDashboardStore() {
     const [state, setState] = useState<DashboardState>(initialState);
 
-    const setData = useCallback((data: DashboardData) => {
-        setState((prev) => {
-            const timesheetStat = prev.data.hr.stats.find(
-                (s) => s.label === "Сотрудники на заводе"
-            );
-
-            const stats = timesheetStat
-                ? [...data.hr.stats.filter((s) => s.label !== "Сотрудники на заводе"), timesheetStat]
-                : data.hr.stats;
-
-            return {
-                ...prev,
-                loading: false,
-                error: null,
-                data: {
-                    ...data,
-                    hr: {
-                        ...data.hr,
-                        stats,
-                    },
-                },
-            };
-        });
+    const setData = useCallback((data: Partial<DashboardData>) => {
+        setState((prev) => ({
+            ...prev,
+            loading: false,
+            error: null,
+            data: mergeDashboardData(prev.data, data),
+        }));
     }, []);
 
     const setLoading = useCallback((loading: boolean) => {
@@ -57,12 +42,11 @@ export function useDashboardStore() {
                 ...prev.data,
                 hr: {
                     ...prev.data.hr,
-                    stats: [
-                        ...prev.data.hr.stats.filter(
-                            (s) => s.label !== "Сотрудники на заводе"
-                        ),
-                        { label: "Сотрудники на заводе", value: totalUsers },
-                    ],
+                    stats: prev.data.hr.stats.map((s) =>
+                        s.label === "Сотрудники на заводе"
+                            ? { ...s, value: totalUsers }
+                            : s
+                    ),
                 },
             },
         }));

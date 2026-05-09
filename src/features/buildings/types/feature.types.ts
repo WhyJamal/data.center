@@ -1,5 +1,7 @@
+import { IEnergyDevice } from "@/types/energy.types";
+
 export interface BuildingFeatures {
-  energy?: EnergyFeature;
+  energy?: IEnergyDevice[];
   cameras?: CameraFeature;
   component?: ComponentFeature;
 }
@@ -11,15 +13,6 @@ export interface CameraFeature {
     name: string;
     streamUrl: string;
     status: "online" | "offline";
-  }[];
-}
-
-export interface EnergyFeature {
-  enabled: boolean;
-  meters: {
-    id: number;
-    name: string;
-    value: number;
   }[];
 }
 

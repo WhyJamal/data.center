@@ -3,8 +3,8 @@
 import { useSection } from "@/app/context/SectionContext";
 import EnergyPlatformBanner from "./energy-platform-banner";
 import MultiYearLineChart from "./line-pointer";
-import { productionData } from "./production-data";
 import { useDashboardData } from "@/app/context/DashboardDataContext";
+import EnergyMeterBlock from "./energy-meter-block";
 
 export default function RightPanel() {
   const { selectedSection } = useSection();
@@ -13,7 +13,7 @@ export default function RightPanel() {
   return (
     <div className="bg-slate-900/50 backdrop-blur-sm h-full overflow-y-auto border-l border-blue-500/20 custom-scroll">
       <div className="mb-6 mt-16">
-        {selectedSection?.cameras && selectedSection.cameras.length > 0 && (
+        {/* {selectedSection?.features?.cameras && selectedSection.features.cameras.length > 0 && (
           <div className="mt-4">
             <h4 className="text-sm font-semibold text-white mb-2">Cameras</h4>
             <div className="flex flex-col items-center gap-2 overflow-y-auto max-h-96 custom-scroll">
@@ -29,11 +29,14 @@ export default function RightPanel() {
               ))}
             </div>
           </div>
-        )}
-
+        )} */}
       </div>
 
-      <EnergyPlatformBanner />
+      {selectedSection?.features?.energy && selectedSection?.features?.energy.length > 0 &&
+        <EnergyMeterBlock />       
+      }
+
+      <EnergyPlatformBanner data={data.energy} />
 
       <div className="flex flex-col w-full bg-slate-800/50 rounded border border-blue-500/20 items-center">
         <span className="text-[12px] text-slate-400 mb-1 mt-1 tracking-wide">

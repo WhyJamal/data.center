@@ -7,10 +7,11 @@ import { useEffect, useState } from "react";
 import { IconButton } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import PolygonOverlay from "@/components/polygon-overlay";
-import ProductionChart from "@/features/buildings/components/production-chart";
 import { renderBuildingComponent } from "@/features/buildings/renderers/renderBuildingComponent";
+import { useSection } from "@/app/context/SectionContext";
 
 export default function BuildingDetailPage() {
+  const { clearSelectedSection, setSelectedSection } = useSection();
   const params = useParams();
   const router = useRouter();
   const id = Number(params.id);
@@ -24,9 +25,16 @@ export default function BuildingDetailPage() {
     return () => clearTimeout(t);
   }, []);
 
+  useEffect(() => {
+    if (!building) return;
+
+    setSelectedSection(building);
+  }, [building]);
+
   const handleBack = () => {
     if (exiting) return;
     setExiting(true);
+    clearSelectedSection()
     setTimeout(() => router.push("/dashboard"), 900);
   };
 
@@ -57,7 +65,7 @@ export default function BuildingDetailPage() {
         transition={{ duration: exiting ? 0.85 : 0.9, ease: [0.16, 1, 0.3, 1] }}
       >
         <div className="relative w-full h-full">
-          
+
           {building.visual.innerImage &&
             <img
               src={building.visual.innerImage}
@@ -66,7 +74,7 @@ export default function BuildingDetailPage() {
               className="absolute inset-0 w-full h-full object-center select-none"
             />
           }
-          
+
           <PolygonOverlay
             items={building.visual.zones?.items ?? []}
             hoveredId={hoveredZone}

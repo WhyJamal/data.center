@@ -72,9 +72,9 @@ const CONFIG: Record<TabKey, TabConfig> = {
 };
 
 const TABS: { key: TabKey; label: string }[] = [
-  { key: "yearly", label: "Годовой" },
-  { key: "monthly", label: "Месячный" },
-  { key: "daily", label: "Дневной" },
+  { key: "yearly", label: "За год" },
+  { key: "monthly", label: "За месяц" },
+  { key: "daily", label: "За день" },
 ];
 
 // ─── Shared MUI chart sx ──────────────────────────────────────────────────────
@@ -156,7 +156,6 @@ export default function ProductionChart() {
         </h2>
       </div>
 
-      {/* Tabs */}
       <div className="mb-3 flex gap-1 rounded-lg border border-blue-500/20 bg-slate-900/50 p-1">
         {TABS.map((tab) => (
           <button

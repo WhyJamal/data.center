@@ -36,7 +36,6 @@ export default function BuildingPage() {
     setSelectedId(b.id);
     setIsExiting(true);
 
-
     setTimeout(() => {
       router.push(`/dashboard/building/${b.id}`);
     }, 900);

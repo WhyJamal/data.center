@@ -59,6 +59,12 @@ export const buildings: IBuilding[] = [
           ],
         },
       },
+      energy: [
+        {
+          "device_id": "69d4f07b5ed92a586d0eeefc",
+          "used_kwh": 640288,
+        }
+      ]
     }
 
   },

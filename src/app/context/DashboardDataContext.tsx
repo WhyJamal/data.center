@@ -11,6 +11,7 @@ import { useDashboardStore } from "@/stores/dashboard.store";
 import { onecSocket } from "@/services/sockets/onec.socket";
 import { timesheetSocket } from "@/services/sockets/timesheet.socket";
 import { useToast } from "@/app/context/ToastContext";
+import { energySocket } from "@/services/sockets/energy.socket";
 
 type DashboardContextValue = {
   data: DashboardData;
@@ -32,33 +33,69 @@ export function DashboardDataProvider({
 
   const hasConnected = useRef(false);
 
+  const onecConnectedToastShown = useRef(false);
+  const timesheetConnectedToastShown = useRef(false);
+  const energyConnectedToastShown = useRef(false);
+
   useEffect(() => {
     if (hasConnected.current) return;
     hasConnected.current = true;
 
     onecSocket.connect({
       onData: (wsData) => {
-        setData(wsData)
-        showToast("1C data updated", "success");
+        setData(wsData);
+
+        if (!onecConnectedToastShown.current) {
+          showToast("1C connected", "success");
+          onecConnectedToastShown.current = true;
+        }
       },
+
       onError: () => {
-        setError("ошибка подключения с 1С")
+        setError("ошибка подключения с 1С");
         showToast("1C connection error", "error");
+      },
+    });
+
+    energySocket.connect({
+      onData: (wsData) => {
+        setData({ energy: wsData.energy });
+
+        if (!energyConnectedToastShown.current) {
+          showToast("Energy connected", "success");
+          energyConnectedToastShown.current = true;
+        }
+      },
+
+      onError: () => {
+        setError("ошибка подключения с электроэнергия");
+        showToast("energy connection error", "error");
       },
     });
 
     timesheetSocket.connect({
       onData: (wsData) => {
-        updateTimesheetStat(wsData.total_users)
-        showToast("Timesheet updated", "info");
+        updateTimesheetStat(wsData.total_users);
+
+        if (!timesheetConnectedToastShown.current) {
+          showToast("Timesheet connected", "info");
+          timesheetConnectedToastShown.current = true;
+        }
       },
-      onError: () => showToast("Timesheet socket error", "warning"),
+
+      onError: () => {
+        showToast("Timesheet socket error", "warning");
+      },
     });
 
     return () => {
       onecSocket.disconnect();
       timesheetSocket.disconnect();
+
       hasConnected.current = false;
+
+      onecConnectedToastShown.current = false;
+      timesheetConnectedToastShown.current = false;
     };
   }, [showToast]);
 
@@ -71,7 +108,12 @@ export function DashboardDataProvider({
 
 export function useDashboardData(): DashboardContextValue {
   const ctx = useContext(DashboardContext);
-  if (!ctx)
-    throw new Error("useDashboardData must be used inside DashboardDataProvider");
+
+  if (!ctx) {
+    throw new Error(
+      "useDashboardData must be used inside DashboardDataProvider"
+    );
+  }
+
   return ctx;
 }
