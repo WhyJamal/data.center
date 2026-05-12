@@ -21,8 +21,10 @@ export type ComponentFeature =
   | EnergyComponent
   | CustomComponent;
 
-  export interface ProductionComponent {
-  type: "production";
+export type ProductionType = "PRODUCTION400T" | "PRODUCTION_MACHINE"
+
+export interface ProductionComponent {
+  type: ProductionType;
   data: {
     chart: {
       label: string;

@@ -165,7 +165,7 @@ export default function BuildingDetailPage() {
               </div>
             </div>
 
-            <div className="w-full px-4">
+            <div className="w-full h-60">
               {renderBuildingComponent(building.features?.component)}
             </div>
 

@@ -6,7 +6,7 @@ interface PaiArcLabelProps {
     value: number;
   }[];
   hideLegend?: boolean;
-  variant?: "blue" | "green" | "orange";
+  variant?: "blue" | "green" | "orange" | "gray";
 }
 
 const COLOR_VARIANTS = {
@@ -33,6 +33,14 @@ const COLOR_VARIANTS = {
     "#fb923c",
     "#fdba74",
   ],
+
+  gray: [
+  "#1f2937",
+  "#374151",
+  "#4b5563",
+  "#6b7280",
+  "#9ca3af",
+],
 };
 
 export default function PaiArcLabel({
@@ -54,34 +62,12 @@ export default function PaiArcLabel({
       series={[
         {
           data: chartData,
-          arcLabel: (item) => `${item.label}-${item.value}%`,
+          arcLabel: (item) => `${item.label}-${item.value}`,
           arcLabelMinAngle: 10,
           arcLabelRadius: "60%",
         },
       ]}
       slotProps={{
-        tooltip: {
-          trigger: "item",
-          anchor: "node",
-          position: "left",
-          placement: "left",
-          disablePortal: true,
-          modifiers: [
-            {
-              name: "preventOverflow",
-              options: {
-                boundary: "clippingParents",
-                padding: 1,
-              },
-            },
-            {
-              name: "flip",
-              options: {
-                fallbackPlacements: ["right", "top", "bottom"],
-              },
-            },
-          ],
-        },
         legend: {
           direction: "horizontal",
           position: { vertical: "bottom", horizontal: "center" },

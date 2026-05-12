@@ -52,11 +52,11 @@ export const buildings: IBuilding[] = [
 
     features: {
       component: {
-        type: "production",
+        type: "PRODUCTION400T",
         data: {
           chart: [
-            { label: "A", value: 40 },
-            { label: "B", value: 60 },
+            { label: "A", value: 0 },
+            { label: "B", value: 0 },
           ],
         },
       },
@@ -150,6 +150,18 @@ export const buildings: IBuilding[] = [
         "81.1,41.9 77.1,41.9 76.9,42.1 68.5,42.6 68.7,46.7 64.6,46.7 65.6,69.7 65.9,70.3 70.5,70.1 70.7,75.2 66.2,75.7 66.5,81.8 66.3,82.6 71.2,82.4 71.5,82 85.3,81.2 86,80.1 84.3,68.2 83.9,68.4 81.4,46.6 81.6,45.9",
       mx: 75,
       my: 52,
+    },
+
+    features: {
+      component: {
+        type: "PRODUCTION_MACHINE",
+        data: {
+          chart: [
+            { label: "A", value: 0 },
+            { label: "B", value: 0 },
+          ],
+        }
+      }
     },
 
     visual: {

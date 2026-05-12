@@ -14,7 +14,7 @@ interface GridDemoProps {
 }
 
 function valueFormatter(value: number | null) {
-    return `${value}mm`;
+    return `${value}`;
 }
 
 const COLOR_MAP = {

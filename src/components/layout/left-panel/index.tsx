@@ -21,6 +21,12 @@ export default function LeftPanel() {
   return (
     <div className="bg-slate-900/50 backdrop-blur-sm h-full overflow-y-auto border-r border-blue-500/20 custom-scroll">
 
+      {/* <iframe
+        src="http://localhost:1984/stream.html?src=cam1"
+        className="mt-16 mb-2 overflow-hidden"
+        allowFullScreen
+      /> */}
+
       <div className="flex rounded w-full items-center justify-center mt-16 mb-2">
         <HRStatCards data={data.hr.stats} />
       </div>
@@ -29,25 +35,19 @@ export default function LeftPanel() {
 
         <div className="flex flex-col items-center flex-1">
           <span className="text-[10px] text-slate-400 mb-1 tracking-wide">
+            Штат по отделам
+          </span>
+          <PieArcLabel data={data.hr.employeesByDepartment} hideLegend variant="gray" />
+        </div>
+
+        <div className="flex flex-col items-center flex-1">
+          <span className="text-[10px] text-slate-400 mb-1 tracking-wide">
             Гендерное распределение
           </span>
           <PieArcLabel data={data.hr.genderDistribution} hideLegend />
         </div>
 
-        <div className="flex flex-col items-center flex-1">
-          <span className="text-[10px] text-slate-400 mb-1 tracking-wide">
-            Штат по отделам
-          </span>
-          <PieArcLabel data={data.hr.employeesByDepartment} hideLegend variant="green" />
-        </div>
-
       </div>
-
-      {/* <iframe
-        src="http://localhost:1984/stream.html?src=cam1"
-        className=""
-        allowFullScreen
-      /> */}
 
       <div className="flex bg-slate-800/50 rounded border border-blue-500/20 items-center justify-center mb-2">
         <TickPlacementBars data={data.hr.monthlyEmployees} variant="red" />
