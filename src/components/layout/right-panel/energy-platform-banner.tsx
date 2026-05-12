@@ -6,9 +6,10 @@ import ElectricBoltIcon from "@mui/icons-material/ElectricBolt";
 
 interface EnergyPlatformBannerProps {
   data: IEnergy;
+  title?: string;
 }
 
-export default function EnergyPlatformBanner({ data }: EnergyPlatformBannerProps) {
+export default function EnergyPlatformBanner({ data, title }: EnergyPlatformBannerProps) {
 
   const totalSum = data?.total_sum ?? 0;
   const yesterday_used = data?.yesterday_sum ?? 0;
@@ -29,7 +30,7 @@ export default function EnergyPlatformBanner({ data }: EnergyPlatformBannerProps
     <div className="w-full mb-2 border border-blue-500/20 rounded overflow-hidden bg-slate-800/50 text-cyan-300">
 
       <div className="text-center text-[9px] font-bold tracking-[2px] text-[#e0f0ff] py-1.5 border-b border-blue-500/20 bg-slate-800/50">
-        ПЛАТФОРМА УПРАВЛЕНИЯ ЭНЕРГИЕЙ
+        {title ? `Объём потребления электроэнергии ${title} зданий ` : "ПЛАТФОРМА УПРАВЛЕНИЯ ЭНЕРГИЕЙ" }
       </div>
 
       <div className="flex flex-col divide-y divide-[#1a3050]">
@@ -137,6 +138,30 @@ export default function EnergyPlatformBanner({ data }: EnergyPlatformBannerProps
           </div>
         </div>
 
+      </div>
+
+      <div className="h-10 flex items-center justify-center bg-slate-800/50 border-t border-blue-500/20">
+        <div className="relative flex items-center justify-center">
+
+          <svg width="34" height="34" viewBox="0 0 24 24" className="absolute">
+            <polygon
+              points="12,2 22,20 2,20"
+              fill="#facc15"
+              stroke="#000"
+              strokeWidth="2"
+              strokeLinejoin="round"
+            />
+          </svg>
+
+          <ElectricBoltIcon
+            sx={{
+              fontSize: 15,
+              color: "#000",
+              filter: "drop-shadow(0 0 3px #eab308)",
+              zIndex: 10,
+            }}
+          />
+        </div>
       </div>
     </div>
   );

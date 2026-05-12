@@ -32,11 +32,11 @@ export default function RightPanel() {
         )} */}
       </div>
 
-      {selectedSection?.features?.energy && selectedSection?.features?.energy.length > 0 &&
+      {/* {selectedSection?.features?.energy && selectedSection?.features?.energy.length > 0 &&
         <EnergyMeterBlock />       
-      }
+      } */}
 
-      <EnergyPlatformBanner data={data.energy} />
+      <EnergyPlatformBanner data={data.energy} title={selectedSection?.type} />
 
       <div className="flex flex-col w-full bg-slate-800/50 rounded border border-blue-500/20 items-center">
         <span className="text-[12px] text-slate-400 mb-1 mt-1 tracking-wide">

@@ -18,6 +18,7 @@ export const buildings: IBuilding[] = [
 
     visual: {
       innerImage: "/factory/inside/float_glass_production_line.png",
+      type: "IMAGE",
       zones: {
         items: [
           {
@@ -62,7 +63,7 @@ export const buildings: IBuilding[] = [
       energy: [
         {
           "device_id": "69d4f07b5ed92a586d0eeefc",
-          "used_kwh": 640288,
+          "used_kwh": 0,
         }
       ]
     }
@@ -84,6 +85,7 @@ export const buildings: IBuilding[] = [
     },
 
     visual: {
+      type: "IMAGE",
       innerImage: "/factory/inside/lines.png",
       zones: {
         items: [
@@ -114,9 +116,7 @@ export const buildings: IBuilding[] = [
       my: 60,
     },
 
-    visual: {
-      innerImage: "",
-    },
+    visual: {type: "IMAGE"},
   },
 
   {
@@ -134,9 +134,7 @@ export const buildings: IBuilding[] = [
       my: 80,
     },
 
-    visual: {
-      innerImage: "",
-    },
+    visual: {type: "IMAGE"},
   },
 
   {
@@ -155,6 +153,7 @@ export const buildings: IBuilding[] = [
     },
 
     visual: {
+      type: "IMAGE",
       innerImage: "/factory/inside/lines.png",
     },
   },
@@ -175,7 +174,9 @@ export const buildings: IBuilding[] = [
     },
 
     visual: {
-      innerImage: "",
+      type: "STREAM",
+      streamId: "cam2",
+      provider: "go2rtc"
     },
   },
 ];

@@ -66,23 +66,42 @@ export default function BuildingDetailPage() {
       >
         <div className="relative w-full h-full">
 
-          {building.visual.innerImage &&
-            <img
-              src={building.visual.innerImage}
-              alt={building.name}
-              draggable={false}
-              className="absolute inset-0 w-full h-full object-center select-none"
+          {building.visual.type === "IMAGE" ? (
+            building.visual.innerImage && (
+              <>
+                <img
+                  src={building.visual.innerImage}
+                  alt={building.name}
+                  draggable={false}
+                  className="absolute inset-0 w-full h-full object-center select-none"
+                />
+                <PolygonOverlay
+                  items={building.visual.zones?.items ?? []}
+                  hoveredId={hoveredZone}
+                  onEnter={(id) => setHoveredZone(id)}
+                  onLeave={() => setHoveredZone(null)}
+                  onClick={(zone) => { console.log("ZONE CLICK:", zone); }}
+                  showGlow={false}
+                />
+              </>
+            )
+          ) : building.visual.type === "VIDEO" ? (
+            <video
+              src={building.visual.videoUrl}
+              autoPlay
+              muted
+              loop
+              className="absolute inset-0 w-full h-full object-cover"
             />
-          }
+          ) : building.visual.type === "STREAM" ? (
+            <iframe
+              src={`http://localhost:1984/stream.html?src=${building.visual.streamId}`}
+              className="absolute inset-0 -top-16 w-full h-full border-0"
+              allowFullScreen
+            />
+          ) : null}
 
-          <PolygonOverlay
-            items={building.visual.zones?.items ?? []}
-            hoveredId={hoveredZone}
-            onEnter={(id) => setHoveredZone(id)}
-            onLeave={() => setHoveredZone(null)}
-            onClick={(zone) => { console.log("ZONE CLICK:", zone); }}
-            showGlow={false}
-          />
+
         </div>
       </motion.div>
 

@@ -12,6 +12,7 @@ import { onecSocket } from "@/services/sockets/onec.socket";
 import { timesheetSocket } from "@/services/sockets/timesheet.socket";
 import { useToast } from "@/app/context/ToastContext";
 import { energySocket } from "@/services/sockets/energy.socket";
+import { useSection } from "./SectionContext";
 
 type DashboardContextValue = {
   data: DashboardData;
@@ -28,6 +29,8 @@ export function DashboardDataProvider({
 }) {
   const { data, loading, error, setData, setError, updateTimesheetStat } =
     useDashboardStore();
+
+  const { selectedSection } = useSection();
 
   const { showToast } = useToast();
 
@@ -57,21 +60,21 @@ export function DashboardDataProvider({
       },
     });
 
-    energySocket.connect({
-      onData: (wsData) => {
-        setData({ energy: wsData.energy });
+    // energySocket.connect({
+    //   onData: (wsData) => {
+    //     setData({ energy: wsData.energy });
 
-        if (!energyConnectedToastShown.current) {
-          showToast("Energy connected", "success");
-          energyConnectedToastShown.current = true;
-        }
-      },
+    //     if (!energyConnectedToastShown.current) {
+    //       showToast("Energy connected", "success");
+    //       energyConnectedToastShown.current = true;
+    //     }
+    //   },
 
-      onError: () => {
-        setError("ошибка подключения с электроэнергия");
-        showToast("energy connection error", "error");
-      },
-    });
+    //   onError: () => {
+    //     setError("ошибка подключения с электроэнергия");
+    //     showToast("energy connection error", "error");
+    //   },
+    // });
 
     timesheetSocket.connect({
       onData: (wsData) => {
@@ -98,6 +101,33 @@ export function DashboardDataProvider({
       timesheetConnectedToastShown.current = false;
     };
   }, [showToast]);
+
+  useEffect(() => {
+    const deviceId =
+      selectedSection?.features?.energy?.[0]?.device_id;
+
+    energySocket.connectToDevice(deviceId);
+
+    energySocket.connect({
+      onData: (wsData) => {
+        setData({ energy: wsData.energy });
+
+        if (!energyConnectedToastShown.current) {
+          showToast("Energy connected", "success");
+          energyConnectedToastShown.current = true;
+        }
+      },
+
+      onError: () => {
+        setError("ошибка подключения с электроэнергия");
+        showToast("energy connection error", "error");
+      },
+    });
+
+    return () => {
+      energySocket.disconnect();
+    };
+  }, [selectedSection]);
 
   return (
     <DashboardContext.Provider value={{ data, loading, error }}>

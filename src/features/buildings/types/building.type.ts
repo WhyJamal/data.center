@@ -23,18 +23,37 @@ export interface BuildingGeometry {
   my: number;
 }
 
-export interface BuildingVisual {
-  innerImage?: string;
-
-  zones?: {
-    items: BuildingZone[]; 
-  };
-}
-
 export interface BuildingZone {
   id: number;
   name: string;
   polygon: string;
   isUnavailable?: boolean;
 }
+
+interface ImageVisual {
+  type: "IMAGE";
+  innerImage?: string;
+
+  zones?: {
+    items: BuildingZone[];
+  };
+}
+
+interface VideoVisual {
+  type: "VIDEO";
+  videoUrl: string;
+  autoplay?: boolean;
+}
+
+interface StreamVisual {
+  type: "STREAM";
+  streamId: string;
+  provider: "go2rtc" | "hikvision" | "rtsp";
+}
+
+type BuildingVisual =
+  | ImageVisual
+  | VideoVisual
+  | StreamVisual;
+
 

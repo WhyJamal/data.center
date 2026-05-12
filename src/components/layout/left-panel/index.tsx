@@ -43,6 +43,12 @@ export default function LeftPanel() {
 
       </div>
 
+      {/* <iframe
+        src="http://localhost:1984/stream.html?src=cam1"
+        className=""
+        allowFullScreen
+      /> */}
+
       <div className="flex bg-slate-800/50 rounded border border-blue-500/20 items-center justify-center mb-2">
         <TickPlacementBars data={data.hr.monthlyEmployees} variant="red" />
       </div>

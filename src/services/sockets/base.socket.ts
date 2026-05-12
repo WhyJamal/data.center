@@ -6,7 +6,7 @@ export interface SocketCallbacks<T> {
 export class BaseSocket<T> {
   private socket: WebSocket | null = null;
   private isConnected = false;
-  private url: string;
+  protected url: string;
 
   constructor(url: string) {
     this.url = url;
