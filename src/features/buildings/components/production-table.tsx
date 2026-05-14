@@ -17,6 +17,7 @@ import {
 
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+import { formatNumber } from "@/utils/formatter-number";
 
 export type ShiftDetail = {
   production: string;
@@ -46,7 +47,7 @@ function Row({ row }: { row: ShiftRow }) {
         <TableCell sx={{ fontWeight: 600 }}>{row.shift}</TableCell>
 
         <TableCell align="right" sx={{ fontWeight: 600 }}>
-          {row.totalQuantity}
+          {formatNumber(row.totalQuantity)}
         </TableCell>
       </TableRow>
 
@@ -70,7 +71,7 @@ function Row({ row }: { row: ShiftRow }) {
                       <TableCell>{d.production}</TableCell>
                       <TableCell>{d.line}</TableCell>
                       <TableCell>{d.machineType}</TableCell>
-                      <TableCell align="right">{d.quantity}</TableCell>
+                      <TableCell align="right">{formatNumber(d.quantity)}</TableCell>
                     </TableRow>
                   ))}
                 </TableBody>

@@ -1,9 +1,9 @@
 import Box from "@mui/material/Box";
 import { LineChart } from "@mui/x-charts/LineChart";
-import type { TProductionData } from "@/types/production.types";
+import type { YearlySalesData } from "@/types/production.types";
 
 interface Props {
-    data: TProductionData;
+    data: YearlySalesData;
 }
 
 export default function MultiYearLineChart({

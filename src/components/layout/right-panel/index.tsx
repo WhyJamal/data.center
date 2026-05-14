@@ -42,7 +42,7 @@ export default function RightPanel() {
         <span className="text-[12px] text-slate-400 mb-1 mt-1 tracking-wide">
           Анализ производства по годам
         </span>
-        <MultiYearLineChart data={data.production} />
+        <MultiYearLineChart data={data.production.yearlySales} />
       </div>
     </div>
   );

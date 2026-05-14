@@ -35,12 +35,12 @@ const COLOR_VARIANTS = {
   ],
 
   gray: [
-  "#1f2937",
-  "#374151",
-  "#4b5563",
-  "#6b7280",
-  "#9ca3af",
-],
+    "#1f2937",
+    "#374151",
+    "#4b5563",
+    "#6b7280",
+    "#9ca3af",
+  ],
 };
 
 export default function PaiArcLabel({
@@ -51,7 +51,7 @@ export default function PaiArcLabel({
   const colors = COLOR_VARIANTS[variant];
 
   const chartData = data.map((item, index) => ({
-    id: item.label,
+    id: `${item.label}-${index}`,
     value: item.value,
     label: item.label,
     color: colors[index % colors.length],
@@ -63,7 +63,7 @@ export default function PaiArcLabel({
         {
           data: chartData,
           arcLabel: (item) => `${item.label}-${item.value}`,
-          arcLabelMinAngle: 10,
+          arcLabelMinAngle: 30,
           arcLabelRadius: "60%",
         },
       ]}
@@ -77,7 +77,7 @@ export default function PaiArcLabel({
         [`& .${pieClasses.arcLabel}`]: {
           fontWeight: "bold",
           fill: "#fff",
-          fontSize: "8px",
+          fontSize: "9px",
         },
 
         [`& .${pieClasses.arc}`]: {

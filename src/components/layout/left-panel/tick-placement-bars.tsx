@@ -43,7 +43,7 @@ export default function GridDemo({ data = [], variant = 'blue' }: GridDemoProps)
             series={[
                 {
                     dataKey: 'value',
-                    label: 'Количество работающих сотрудником',
+                    label: 'Количество сотрудников принятых на работу',
                     valueFormatter,
                     color, 
                 }

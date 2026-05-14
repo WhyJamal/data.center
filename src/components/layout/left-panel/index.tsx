@@ -6,6 +6,7 @@ import { HRStatCards } from "./hr-stat-cards";
 import { useDashboardData } from "@/app/context/DashboardDataContext";
 import { Loading } from "@/components/loading-dot";
 import SystemChart from "./system-chart";
+import BarsChart from "./bar-chart";
 
 export default function LeftPanel() {
   const { data, loading } = useDashboardData();
@@ -37,7 +38,7 @@ export default function LeftPanel() {
           <span className="text-[10px] text-slate-400 mb-1 tracking-wide">
             Штат по отделам
           </span>
-          <PieArcLabel data={data.hr.employeesByDepartment} hideLegend variant="gray" />
+          <PieArcLabel data={data.hr.employeesByDepartment} hideLegend variant="green" />
         </div>
 
         <div className="flex flex-col items-center flex-1">
@@ -50,7 +51,8 @@ export default function LeftPanel() {
       </div>
 
       <div className="flex bg-slate-800/50 rounded border border-blue-500/20 items-center justify-center mb-2">
-        <TickPlacementBars data={data.hr.monthlyEmployees} variant="red" />
+        {/* <TickPlacementBars data={data.hr.monthlyEmployees} variant="red" /> */}
+        <BarsChart data={data.production.productionOutput} />
       </div>
 
       <div className="flex bg-slate-800/50 rounded border border-blue-500/20 items-center justify-center mb-8">
