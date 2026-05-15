@@ -1,5 +1,6 @@
 import { BarChart } from "@mui/x-charts/BarChart";
 import { ProductionOutputItem } from "@/types/production.types";
+import { formatNumber } from "@/utils/formatter-number";
 
 const chartSetting = {
   height: 300,
@@ -43,7 +44,7 @@ export default function BarsChart({
         dataKey: name,
         label: name,
         valueFormatter: (value: number | null) =>
-          value ? `${value}` : "0",
+          value !== null ? formatNumber(value) : "0",
       }))}
       {...chartSetting}
       sx={{
