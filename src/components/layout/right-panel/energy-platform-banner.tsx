@@ -3,6 +3,7 @@
 import { IEnergy } from "@/types/energy.types";
 import { formatNumber } from "@/utils/formatter-number";
 import ElectricBoltIcon from "@mui/icons-material/ElectricBolt";
+import "@assets/animations/energy-animation.css";
 
 interface EnergyPlatformBannerProps {
   data: IEnergy;

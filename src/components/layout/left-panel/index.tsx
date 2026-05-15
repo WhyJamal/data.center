@@ -7,6 +7,10 @@ import { useDashboardData } from "@/app/context/DashboardDataContext";
 import { Loading } from "@/components/loading-dot";
 import SystemChart from "./system-chart";
 import BarsChart from "./bar-chart";
+import BottleIcon from "@/assets/icons/bottle-icon";
+import GlassIcon from "@/assets/icons/glass-icon";
+import JarIcon from "@/assets/icons/jar-icon";
+import ProductionCard from "./production-card";
 
 export default function LeftPanel() {
   const { data, loading } = useDashboardData();
@@ -53,6 +57,21 @@ export default function LeftPanel() {
       <div className="flex bg-slate-800/50 rounded border border-blue-500/20 items-center justify-center mb-2">
         {/* <TickPlacementBars data={data.hr.monthlyEmployees} variant="red" /> */}
         <BarsChart data={data.production.productionOutput} />
+      </div>
+
+      <div className="flex flex-col items-center flex-1 bg-slate-800/50 rounded border border-blue-500/20 py-2 px-2 mb-2">
+        <span className="text-[10px] text-slate-400 mb-1 tracking-wide">
+          Недельное производство продукции <span className="font-bold text-blue-500">{data.production?.weeklyProductionOutput?.week || ""}</span>
+        </span>
+        <div className="flex w-full gap-2 items-stretch">
+          {data.production?.weeklyProductionOutput?.items.length > 0 ? (
+            data.production?.weeklyProductionOutput?.items.map((item, index) => (
+              <ProductionCard key={index} data={item} />
+            ))
+          ) : (
+            <span className="text-slate-400 text-center w-full text-xs">No production data available</span>
+          )}
+        </div>
       </div>
 
       <div className="flex bg-slate-800/50 rounded border border-blue-500/20 items-center justify-center mb-8">

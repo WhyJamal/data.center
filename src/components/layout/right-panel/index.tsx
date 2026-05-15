@@ -5,6 +5,8 @@ import EnergyPlatformBanner from "./energy-platform-banner";
 import MultiYearLineChart from "./line-pointer";
 import { useDashboardData } from "@/app/context/DashboardDataContext";
 import EnergyMeterBlock from "./energy-meter-block";
+import { GasPlatformBanner } from "./gas-platform-banner";
+import { WaterPlatformBanner } from "./water-platform-banner";
 
 export default function RightPanel() {
   const { selectedSection } = useSection();
@@ -37,6 +39,10 @@ export default function RightPanel() {
       } */}
 
       <EnergyPlatformBanner data={data.energy} title={selectedSection?.type} />
+      
+      <GasPlatformBanner />
+
+      <WaterPlatformBanner />
 
       <div className="flex flex-col w-full bg-slate-800/50 rounded border border-blue-500/20 items-center">
         <span className="text-[12px] text-slate-400 mb-1 mt-1 tracking-wide">
