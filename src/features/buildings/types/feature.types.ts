@@ -19,19 +19,38 @@ export interface CameraFeature {
 export type ComponentFeature =
   | ProductionComponent
   | EnergyComponent
-  | CustomComponent;
+  | CustomComponent
+  | DosingComponent;
 
 export type ProductionType = "PRODUCTION400T" | "PRODUCTION_MACHINE"
 
+export type ShiftDetail = {
+  production: string;
+  line: string;
+  machineType: string;
+  quantity: number;
+};
+
+export type ShiftRow = {
+  shift: string;
+  totalQuantity: number;
+  details: ShiftDetail[];
+};
+
 export interface ProductionComponent {
   type: ProductionType;
-  data: {
-    chart: {
-      label: string;
-      value: number;
-    }[];
-  };
+  data: ShiftRow;
 }
+
+export interface RawMaterialItem {
+  rawmaterial: string;
+  quantity: number;
+}
+
+export interface DosingComponent {
+  type: "DOSING";
+  data: RawMaterialItem[];
+};
 
 export interface EnergyComponent {
   type: "energy";

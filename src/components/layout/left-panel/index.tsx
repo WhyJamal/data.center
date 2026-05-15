@@ -1,16 +1,14 @@
 'use client';
 
 import PieArcLabel from "./pai-arc-label";
-import TickPlacementBars from "./tick-placement-bars";
+// import TickPlacementBars from "./tick-placement-bars";
 import { HRStatCards } from "./hr-stat-cards";
 import { useDashboardData } from "@/app/context/DashboardDataContext";
 import { Loading } from "@/components/loading-dot";
 import SystemChart from "./system-chart";
 import BarsChart from "./bar-chart";
-import BottleIcon from "@/assets/icons/bottle-icon";
-import GlassIcon from "@/assets/icons/glass-icon";
-import JarIcon from "@/assets/icons/jar-icon";
 import ProductionCard from "./production-card";
+import MultiYearLineChart from "./line-pointer";
 
 export default function LeftPanel() {
   const { data, loading } = useDashboardData();
@@ -72,6 +70,13 @@ export default function LeftPanel() {
             <span className="text-slate-400 text-center w-full text-xs">No production data available</span>
           )}
         </div>
+      </div>
+      
+      <div className="flex flex-col w-full bg-slate-800/50 rounded border border-blue-500/20 items-center mb-2">
+        <span className="text-[12px] text-slate-400 mb-1 mt-1 tracking-wide">
+          Анализ производства по годам
+        </span>
+        <MultiYearLineChart data={data.production.yearlySales} />
       </div>
 
       <div className="flex bg-slate-800/50 rounded border border-blue-500/20 items-center justify-center mb-8">

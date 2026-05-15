@@ -12,25 +12,12 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  Typography,
 } from "@mui/material";
 
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { formatNumber } from "@/utils/formatter-number";
-
-export type ShiftDetail = {
-  production: string;
-  line: string;
-  machineType: string;
-  quantity: number;
-};
-
-export type ShiftRow = {
-  shift: string;
-  totalQuantity: number;
-  details: ShiftDetail[];
-};
+import { ShiftRow } from "../types/feature.types";
 
 function Row({ row }: { row: ShiftRow }) {
   const [open, setOpen] = React.useState(false);

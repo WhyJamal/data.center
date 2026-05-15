@@ -2,9 +2,7 @@
 
 import { useSection } from "@/app/context/SectionContext";
 import EnergyPlatformBanner from "./energy-platform-banner";
-import MultiYearLineChart from "./line-pointer";
 import { useDashboardData } from "@/app/context/DashboardDataContext";
-import EnergyMeterBlock from "./energy-meter-block";
 import { GasPlatformBanner } from "./gas-platform-banner";
 import { WaterPlatformBanner } from "./water-platform-banner";
 
@@ -34,22 +32,12 @@ export default function RightPanel() {
         )} */}
       </div>
 
-      {/* {selectedSection?.features?.energy && selectedSection?.features?.energy.length > 0 &&
-        <EnergyMeterBlock />       
-      } */}
-
       <EnergyPlatformBanner data={data.energy} title={selectedSection?.type} />
       
       <GasPlatformBanner />
 
       <WaterPlatformBanner />
 
-      <div className="flex flex-col w-full bg-slate-800/50 rounded border border-blue-500/20 items-center">
-        <span className="text-[12px] text-slate-400 mb-1 mt-1 tracking-wide">
-          Анализ производства по годам
-        </span>
-        <MultiYearLineChart data={data.production.yearlySales} />
-      </div>
     </div>
   );
 }

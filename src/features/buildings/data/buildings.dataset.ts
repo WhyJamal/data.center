@@ -54,10 +54,9 @@ export const buildings: IBuilding[] = [
       component: {
         type: "PRODUCTION400T",
         data: {
-          chart: [
-            { label: "A", value: 0 },
-            { label: "B", value: 0 },
-          ],
+          shift: "",
+          totalQuantity: 0,
+          details: [],
         },
       },
       energy: [
@@ -135,6 +134,13 @@ export const buildings: IBuilding[] = [
     },
 
     visual: {type: "IMAGE"},
+
+    features: {
+      component: {
+        type: "DOSING",
+        data: [],
+      }
+    }
   },
 
   {
@@ -156,11 +162,10 @@ export const buildings: IBuilding[] = [
       component: {
         type: "PRODUCTION_MACHINE",
         data: {
-          chart: [
-            { label: "A", value: 0 },
-            { label: "B", value: 0 },
-          ],
-        }
+          shift: "",
+          totalQuantity: 0,
+          details: [],
+        },
       }
     },
 
