@@ -17,19 +17,7 @@ import {
 
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
-
-type ShiftDetail = {
-  production: string;
-  line: string;
-  machineType: string;
-  quantity: number;
-};
-
-type ShiftRow = {
-  shift: string;
-  totalQuantity: number;
-  details: ShiftDetail[];
-};
+import type { ShiftRow } from "../types/feature.types";
 
 const rows: ShiftRow[] = [
   {

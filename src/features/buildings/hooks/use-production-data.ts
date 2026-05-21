@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { ShiftRow } from "../components/production-table";
+import type { ShiftRow } from "../types/feature.types";
 import { getData } from "@/lib/requests-1c";
 import { ProductionType } from "../types/feature.types";
 

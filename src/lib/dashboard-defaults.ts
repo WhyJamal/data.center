@@ -12,7 +12,27 @@ export const defaultDashboardData: DashboardData = {
   },
 
   production: {
-    months: [],
-    series: [],
+    weeklyProductionOutput: {
+      week: "",
+      items: [],
+    },
+    yearlySales: {
+      months: [],
+      series: [],
+    },
+    productionOutput: [],
   },
+  energy: {
+    "success": true,
+    "devices": [{ "device_id": "", "used_kwh": 0 }],
+    "total_used_kwh": 0,
+    "total_sum": 0,
+
+    "yesterday_used": 0,
+    "yesterday_sum": 0,
+    "monthly_used": 0,
+    "monthly_sum": 0,
+    "yearly_used": 0,
+    "yearly_sum": 0,
+  }
 };

@@ -19,17 +19,25 @@ export default function DashboardLayout({
         <div className="min-h-screen bg-slate-950 text-white">
           <Header />
 
+          {/* 
+            10:2 aspect ratio layout
+            Left panel: 2 columns (wide)
+            Center: main content
+            Right panel: 2 columns (wide)
+            BG image: positioned to fit wide landscape 10:2 screen
+          */}
           <div
             className="flex h-[calc(100vh-10px)]"
             style={{
               backgroundImage: "url('/factory/buildings.png')",
               backgroundSize: "cover",
-              backgroundPosition: "center",
-              backgroundRepeat: "no-repeat"
+              backgroundPosition: "center 60%",
+              backgroundRepeat: "no-repeat",
             }}
           >
 
-            <aside className="w-[20%] shrink-0 overflow-x-hidden">
+            {/* LEFT PANEL — 2-column grid layout */}
+            <aside className="w-[28%] shrink-0 overflow-x-hidden">
               <LeftPanel />
             </aside>
 
@@ -37,7 +45,8 @@ export default function DashboardLayout({
               {children}
             </main>
 
-            <aside className="w-[20%] shrink-0">
+            {/* RIGHT PANEL — 2-column grid layout */}
+            <aside className="w-[28%] shrink-0">
               <RightPanel />
             </aside>
           </div>

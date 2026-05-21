@@ -1,4 +1,5 @@
 import type { IBuilding } from "@/features/buildings/types/building.type";
+import { ProductionType, WarehouseType } from "../types/feature.types";
 
 export const buildings: IBuilding[] = [
   {
@@ -11,7 +12,7 @@ export const buildings: IBuilding[] = [
 
     geometry: {
       polygon:
-        "11.7,7.6 11.1,9 10.1,12.5 10.1,13.2 5.6,28.6 6.1,29.5 21.9,30.5 22.2,28.4 29.3,28.6 31.8,17.8 34.6,17.8 34.7,15.3 39.5,15.3 39.3,18.4 39.7,19.3 43,19.3 43.4,15.8 44.8,15.8 44.5,19 49.8,19.6 50,17.4 58.1,17.5 58.6,11.5 58.5,10.6 51.2,10.3 51.1,10.8 32.7,9.4 32.6,9.1",
+        "11.6,7.8 11,9.1 10,12.5 10.2,13.2 31.8,14.4 31.9,15.2 44,15.7 50.9,16.5 51.1,17.1 58.4,17.4 58.7,11.4 58.4,10.7 51.1,10.1 51,10.8 48.8,10.7 45.2,10.3 44.9,11.7 44.3,11.7 44.3,10.3 32.8,9.4 32.9,8.9",
       mx: 27,
       my: 11,
     },
@@ -52,7 +53,7 @@ export const buildings: IBuilding[] = [
 
     features: {
       component: {
-        type: "PRODUCTION400T",
+        type: ProductionType.PRODUCTION400T,
         data: {
           shift: "",
           totalQuantity: 0,
@@ -64,13 +65,109 @@ export const buildings: IBuilding[] = [
           "device_id": "69d4f07b5ed92a586d0eeefc",
           "used_kwh": 0,
         }
-      ]
+      ],
+      cameras: [
+        {
+          id: 1,
+          name: "Camera 1",
+          streamUrl: "http://localhost:1984/stream.html?src=cam4",
+          status: "online",
+          enabled: true,
+          location: "right"
+        },
+        {
+          id: 2,
+          name: "Camera 2",
+          streamUrl: "http://localhost:1984/stream.html?src=cam5",
+          status: "online",
+          enabled: true,
+          location: "right"
+        },
+        {
+          id: 3,
+          name: "Camera 3",
+          streamUrl: "http://localhost:1984/stream.html?src=cam6",
+          status: "online",
+          enabled: true,
+          location: "left"
+        },
+        {
+          id: 4,
+          name: "Camera 4",
+          streamUrl: "http://localhost:1984/stream.html?src=cam7",
+          status: "online",
+          enabled: true,
+          location: "left"
+        },
+        {
+          id: 5,
+          name: "Camera 5",
+          streamUrl: "http://localhost:1984/stream.html?src=cam8",
+          status: "online",
+          enabled: true,
+          location: "left"
+        },
+      ],
     }
 
   },
 
   {
     id: 2,
+    name: "Склад",
+    type: "400т склад",
+    area: 8640,
+    floors: 1,
+    isUnavailable: false,
+
+    geometry: {
+      polygon:
+        "10,13.5 5.5,28.5 6.1,29.5 22,30.5 22.3,28.5 29.6,28.6 32.1,16.1 31.8,14.6",
+      mx: 20,
+      my: 20,
+    },
+
+    visual: {
+      innerImage: "/factory/inside/warehause_galesses.png",
+      type: "IMAGE",
+    },
+
+    features: {
+      component: {
+        type: WarehouseType.WAREHOUSE_400T,
+        data: []
+      },
+      energy: [
+        {
+          "device_id": "69d4f07b5ed92a586d0eeefc",
+          "used_kwh": 0,
+        }
+      ],
+
+      cameras: [
+        {
+          id: 1,
+          name: "Camera 1",
+          streamUrl: "http://localhost:1984/stream.html?src=cam9",
+          status: "online",
+          enabled: true,
+          location: "left"
+        },
+        {
+          id: 2,
+          name: "Camera 2",
+          streamUrl: "http://localhost:1984/stream.html?src=cam10",
+          status: "online",
+          enabled: true,
+          location: "left"
+        },
+      ]
+    }
+
+  },
+
+  {
+    id: 3,
     name: "Склад",
     type: "Склад",
     area: 3150,
@@ -85,7 +182,7 @@ export const buildings: IBuilding[] = [
 
     visual: {
       type: "IMAGE",
-      innerImage: "/factory/inside/lines.png",
+      innerImage: "/factory/inside/warehause.png",
       zones: {
         items: [
           { id: 1, name: "Liniya A", polygon: "10,10 30,10 30,30 10,30" },
@@ -98,10 +195,31 @@ export const buildings: IBuilding[] = [
         ],
       },
     },
+
+    features: {
+      cameras: [
+        {
+          id: 1,
+          name: "Camera 1",
+          streamUrl: "http://localhost:1984/stream.html?src=cam9",
+          status: "online",
+          enabled: true,
+          location: "left"
+        },
+        {
+          id: 2,
+          name: "Camera 2",
+          streamUrl: "http://localhost:1984/stream.html?src=cam10",
+          status: "online",
+          enabled: true,
+          location: "left"
+        },
+      ]
+    }
   },
 
   {
-    id: 3,
+    id: 4,
     name: "Производство",
     type: "200т цех",
     area: 720,
@@ -115,11 +233,11 @@ export const buildings: IBuilding[] = [
       my: 60,
     },
 
-    visual: {type: "IMAGE"},
+    visual: { type: "IMAGE" },
   },
 
   {
-    id: 4,
+    id: 5,
     name: "Дозировочный корпус",
     type: "Дозировочно-смесительный цех",
     area: 1920,
@@ -133,18 +251,58 @@ export const buildings: IBuilding[] = [
       my: 80,
     },
 
-    visual: {type: "IMAGE"},
+    visual: { type: "IMAGE" },
 
     features: {
       component: {
         type: "DOSING",
         data: [],
-      }
+      },
+
+      cameras: [
+        {
+          id: 1,
+          name: "Camera 1",
+          streamUrl: "http://localhost:1984/stream.html?src=cam12",
+          status: "online",
+          enabled: true,
+          location: "left"
+        },
+        {
+          id: 2,
+          name: "Camera 2",
+          streamUrl: "http://localhost:1984/stream.html?src=cam13",
+          status: "online",
+          enabled: true,
+          location: "left"
+        },
+      ]
     }
   },
 
   {
-    id: 5,
+    id: 6,
+    name: "Склад",
+    type: "Склад машинного цеха",
+    area: 5380,
+    floors: 1,
+    isUnavailable: false,
+
+    geometry: {
+      polygon:
+        "82.8,58.4 81.3,46 81.5,45.9 81.2,41.7 77.1,41.9 77.1,42.1 68.5,42.6 68.6,46.3 64.7,46.7 65.2,59.5",
+      mx: 75,
+      my: 52,
+    },
+
+    visual: {
+      type: "IMAGE",
+      innerImage: "/factory/inside/warehause_glasses_bottles.png",
+    },
+  },
+
+  {
+    id: 7,
     name: "Производство",
     type: "Машинный цех",
     area: 5380,
@@ -153,20 +311,31 @@ export const buildings: IBuilding[] = [
 
     geometry: {
       polygon:
-        "81.1,41.9 77.1,41.9 76.9,42.1 68.5,42.6 68.7,46.7 64.6,46.7 65.6,69.7 65.9,70.3 70.5,70.1 70.7,75.2 66.2,75.7 66.5,81.8 66.3,82.6 71.2,82.4 71.5,82 85.3,81.2 86,80.1 84.3,68.2 83.9,68.4 81.4,46.6 81.6,45.9",
+        "82.9,58.2 84,68.3 84.2,68.3 85.8,80.1 85.1,80.8 66.5,82.7 66.2,76.1 71,75.6 70.7,70.3 65.5,70.6 65.1,59.4",
       mx: 75,
-      my: 52,
+      my: 65,
     },
 
     features: {
       component: {
-        type: "PRODUCTION_MACHINE",
+        type: ProductionType.PRODUCTION_MACHINE,
         data: {
           shift: "",
           totalQuantity: 0,
           details: [],
         },
-      }
+      },
+
+      cameras: [
+        {
+          id: 1,
+          name: "Camera 1",
+          streamUrl: "http://localhost:1984/stream.html?src=cam11",
+          status: "online",
+          enabled: true,
+          location: "left"
+        },
+      ]
     },
 
     visual: {
@@ -176,7 +345,7 @@ export const buildings: IBuilding[] = [
   },
 
   {
-    id: 6,
+    id: 8,
     name: "Главный комплекс",
     type: "Штаб-квартира",
     area: 5400,
@@ -194,6 +363,27 @@ export const buildings: IBuilding[] = [
       type: "STREAM",
       streamId: "cam2",
       provider: "go2rtc"
+    },
+
+    features: {
+      cameras: [
+        {
+          id: 1,
+          name: "Camera 1",
+          streamUrl: "http://localhost:1984/stream.html?src=cam1",
+          status: "online",
+          enabled: true,
+          location: "left"
+        },
+        {
+          id: 2,
+          name: "Camera 2",
+          streamUrl: "http://localhost:1984/stream.html?src=cam3",
+          status: "online",
+          enabled: true,
+          location: "left"
+        },
+      ]
     },
   },
 ];

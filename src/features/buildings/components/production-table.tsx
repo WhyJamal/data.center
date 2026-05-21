@@ -17,7 +17,7 @@ import {
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { formatNumber } from "@/utils/formatter-number";
-import { ShiftRow } from "../types/feature.types";
+import type { ShiftRow } from "../types/feature.types";
 
 function Row({ row }: { row: ShiftRow }) {
   const [open, setOpen] = React.useState(false);
